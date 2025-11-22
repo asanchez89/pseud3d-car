@@ -3,12 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pseudo-3D racer</title>
-    <style>body {margin: 0; background: #000; overflow: hidden;}</style>
-    <script src="https://cdn.jsdelivr.net/npm/phaser@3.86.0/dist/phaser.min.js"></script>
-    <script src="main.js"></script>
+    <title>Pseudo-3D Racer</title>
+    <style>
+        body {
+            margin: 0;
+            background: #000;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        
+        canvas {
+            border: 2px solid #333;
+            display: block;
+        }
+        
+        #info {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: #fff;
+            font-family: monospace;
+            font-size: 12px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
 </head>
 <body>
+    <canvas id="gameCanvas"></canvas>
     
+    <div id="info">
+        Use Arrow Keys or WASD to drive<br>
+        ↑/W: Accelerate<br>
+        ↓/S: Brake<br>
+        ←→/AD: Steer
+    </div>
+    
+    <script type="module">
+        import { init } from './engine/engine.js';
+        
+        // Initialize game with configuration
+        const engine = init('gameCanvas', {
+            width: 1280,
+            height: 720,
+            segmentLength: 200,
+            roadWidth: 2000,
+            drawDistance: 300,
+            cameraHeight: 1000,
+            trackLength: 100,
+            debug: true
+        });
+        
+        console.log('Pseudo-3D racing game initialized!');
+    </script>
 </body>
 </html>
