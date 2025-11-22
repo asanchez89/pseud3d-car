@@ -23,8 +23,8 @@ export class GameEngine {
       roadWidth: config.roadWidth || 2000,
       drawDistance: config.drawDistance || 300,
       cameraHeight: config.cameraHeight || 1000,
-      cameraDepth: config.cameraDepth || 1 / Math.tan((90 / 2) * Math.PI / 180),
       fieldOfView: config.fieldOfView || 100,
+      cameraDepth: config.cameraDepth || 1 / Math.tan(((config.fieldOfView || 100) / 2) * Math.PI / 180),
       fogDensity: config.fogDensity || 5,
       trackLength: config.trackLength || 100,
       debug: config.debug !== undefined ? config.debug : true
@@ -54,7 +54,8 @@ export class GameEngine {
         brake: 150,
         steer: 0.02,
         offRoadDecel: 0.5,
-        offRoadLimit: 100
+        offRoadLimit: 100,
+        maxLateralPosition: 1.0 // Road boundaries
       },
       camera: {
         x: 0,
@@ -185,9 +186,8 @@ export class GameEngine {
     }
     
     // Keep player on road (basic collision)
-    const maxX = 1.0; // Road boundaries
-    if (Math.abs(player.x) > maxX) {
-      player.x = Math.sign(player.x) * maxX;
+    if (Math.abs(player.x) > player.maxLateralPosition) {
+      player.x = Math.sign(player.x) * player.maxLateralPosition;
       player.speed = Math.min(player.speed, player.offRoadLimit);
     }
     

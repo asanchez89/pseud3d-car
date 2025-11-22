@@ -248,7 +248,7 @@ export function drawDebugOverlay(ctx, width, height, state, road) {
   const segment = road.findSegment(state.camera.z);
   
   const lines = [
-    `FPS: 60 (fixed)`,
+    `FPS: 60 (fixed)`, // Fixed timestep ensures consistent 60Hz physics
     `Player X: ${state.player.x.toFixed(2)}`,
     `Player Z: ${state.player.z.toFixed(2)}`,
     `Speed: ${state.player.speed.toFixed(2)}`,
