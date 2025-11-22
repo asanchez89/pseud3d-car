@@ -47,8 +47,11 @@ function drawBackground(ctx, width, height) {
 function renderRoadSegments(ctx, road, baseSegment, drawDistance, width, height, state) {
   const baseIndex = baseSegment.index;
   
+  // Limit drawDistance to available segments
+  const maxDraw = Math.min(drawDistance, road.segments.length - 1);
+  
   // Draw from far to near to avoid overdraw issues
-  for (let n = drawDistance; n > 0; n--) {
+  for (let n = maxDraw; n > 0; n--) {
     const segment = road.segments[(baseIndex + n) % road.segments.length];
     const prevSegment = road.segments[(baseIndex + n - 1) % road.segments.length];
     
@@ -167,8 +170,11 @@ function drawTrapezoid(ctx, x1, y1, w1, x2, y2, w2) {
 function renderSprites(ctx, road, baseSegment, drawDistance, state) {
   const sprites = [];
   
+  // Limit drawDistance to available segments
+  const maxDraw = Math.min(drawDistance, road.segments.length);
+  
   // Collect all visible sprites
-  for (let n = 0; n < drawDistance; n++) {
+  for (let n = 0; n < maxDraw; n++) {
     const segment = road.segments[(baseSegment.index + n) % road.segments.length];
     
     if (segment.sprites.length > 0) {
